@@ -1,0 +1,78 @@
+# ✈️ Aviation Accidents & Flight Safety Analysis (1982-2026)
+### Data Visualization Final Project - Summer 2026
+**Author:** Mohammed Abrar
+
+An end-to-end data analysis, visualization, and interactive dashboard project detailing U.S. and global civil aviation safety metrics, structural durability, weather impact, and mechanical engineering redundancy.
+
+---
+
+## 📁 Repository Structure
+*   `data/`
+    *   `aviation_accidents_master.csv`: Cleaned, geocoded dataset of NTSB aviation accidents tracking fatalities, weather rules, engine configurations, and aircraft categories.
+*   `analysis.ipynb`: Fully documented Jupyter Notebook containing the **11 analytical questions** and their corresponding **Plotly visualizations** (pre-rendered).
+*   `analysis.html`: Clean HTML export of the Jupyter Notebook.
+*   `app.py`: High-performance, premium **Streamlit dashboard** featuring dynamic sidebar filters, KPI cards, and multiple analytical tabs.
+*   `presentation.html`: Interactive HTML-based slide deck with embedded interactive Plotly charts.
+*   `download_and_clean.py`: Automated pipeline to fetch dataset, clean latitude/longitude strings (handling DMS formats), resolve spelling variations in manufacturers, and calculate safety KPIs.
+*   `generate_notebook.py`: Script that programmatically builds and pre-runs `analysis.ipynb`.
+*   `generate_presentation.py`: Script that programmatically builds `presentation.html` with embedded interactive Plotly figures.
+*   `requirements.txt`: Python package dependencies.
+
+---
+
+## 🚀 Getting Started & How to Run
+
+### 1. Prerequisite Setup
+Ensure you have **Python 3.8+** installed. Create a virtual environment and install the required libraries:
+```bash
+# Create and activate virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Upgrade pip and install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 2. Running the Data Pipeline (Optional)
+The data is already downloaded and preprocessed in the `data/` directory. If you ever want to re-run the pipeline to fetch the latest data:
+```bash
+python download_and_clean.py
+```
+
+### 3. Launching the Streamlit Dashboard
+To open the interactive dashboard in your web browser:
+```bash
+streamlit run app.py
+```
+This dashboard allows you to filter the data by year range, aircraft category, weather condition, and engine count in real-time. It features three tabs:
+1.  **Safety Trends Over Time**: Compares accident frequency (Q1) and engine count fatality profiles (Q10).
+2.  **Geographic Hotspots Map**: Features an interactive world scatter map (Q7) and US state accident choropleth (Q6).
+3.  **Engineering & Weather Factors**: Contains engine safety bubble charts (Q4) and flight phase bar charts (Q2).
+
+### 4. Viewing the Presentation Slides (HTML to PDF)
+Double-click `presentation.html` to open it in your browser. It contains **fully interactive Plotly charts** inside the slides!
+*   **To Export to PDF:** Open `presentation.html` in Google Chrome, press `Cmd + P` (Mac) or `Ctrl + P` (Windows), select **Destination: Save as PDF**, tick **Background graphics**, set **Margins: None**, and click **Save**. The custom print CSS is pre-configured to format each slide perfectly as a single 16:9 PDF page.
+
+---
+
+## 💡 The 11 Analytical Questions Addressed
+1.  **Q1 (Trend)**: How has the annual frequency of aviation accidents changed since 1982, and does the trend differ between Accidents and Incidents?
+2.  **Q2 (Composition)**: What phase of flight is statistically the most dangerous? (i.e. When do accidents most frequently occur, and which phases are the most lethal?)
+3.  **Q3 (Correlation)**: Does the weather condition (VMC vs. IMC) correlate with the severity of aircraft damage, and how does this affect passenger survival rates?
+4.  **Q4 (Multi-Dimensional)**: How do different engine types (Turbofan, Turbojet, Turboprop, Reciprocating) compare in terms of average number of engines and their safety profiles (accidents and fatality rate)?
+5.  **Q5 (Comparison)**: Who are the top 10 aircraft manufacturers involved in accidents since 2000, and what is their breakdown of aircraft damage severity?
+6.  **Q6 (Spatial)**: Where are the primary geographic hotspots of aviation accidents within the United States?
+7.  **Q7 (Spatial)**: What is the worldwide distribution of aviation accidents?
+8.  **Q8 (Composition)**: Is there a significant difference in accident counts and survival rates between amateur-built (homebuilt) and professionally manufactured aircraft?
+9.  **Q9 (Trend)**: Has the proportion of accidents resulting in total destruction of the aircraft decreased over the decades?
+10. **Q10 (Trend)**: Are multi-engine aircraft safer than single-engine aircraft? (Answering a classic aeronautical engineering question)
+11. **Q11 (Temporal)**: Is there a seasonal or weekly pattern to aviation accidents?
+
+---
+
+## 🎨 Visualization Design Choices
+*   **CVD-Safe Color Palettes**: Colors are selected to be easily distinguishable for colorblind users, mapping severe damage categories to red/orange gradients and minor categories to blue/slate.
+*   **Decluttered Layout**: Removed background grids, ticks, and legends where direct annotation was possible. Used `template="plotly_white"` as the base for notebook charts.
+*   **Explanatory Titles**: All figures have active titles highlighting the core takeaway (e.g. *"Multi-Engine Redundancy Decoupled Engine Failures from High Mortality Rates"* rather than *"Line Chart of Fatality Rates"*).
+*   **White Background / Slate Cards**: Used high contrast and professional typography (Outfit/Inter).
