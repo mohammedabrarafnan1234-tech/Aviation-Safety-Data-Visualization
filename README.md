@@ -10,6 +10,20 @@ An end-to-end data analysis, visualization, and interactive dashboard project de
 
 ---
 
+## 📋 Grading Checklist Compliance
+
+This project satisfies all requirements outlined in the final course checklist:
+
+| Checklist Requirement | Compliance Status | Implementation Details |
+| :--- | :---: | :--- |
+| **1. Rich Real-World Dataset** | **Satisfied** | Sourced the official **NTSB Aviation Database** (87,275 records, 31 attributes) containing mixed categorical, numerical, temporal, and geospatial fields. |
+| **2. 10+ Multi-Dimensional Questions** | **Satisfied** | Posed and resolved **11 multi-dimensional analytical questions** (Q1–Q11) analyzing weather impacts, engine configurations, structural safety trends, and geographic distributions. |
+| **3. Plotly Only & CVD-Safe** | **Satisfied** | All 11 figures are built exclusively using **Plotly**, styled with customized high-contrast CVD-safe color palettes, and stripped of layout clutter. |
+| **4. Streamlit Dashboard & Slides Link** | **Satisfied** | Deployed an interactive Streamlit dashboard (`app.py`) with sidebar filters, and hosted live interactive presentation slides at [GitHub Pages](https://mohammedabrarafnan1234-tech.github.io/Aviation-Safety-Data-Visualization/presentation.html). |
+| **5. Deliverables Zipped** | **Satisfied** | All code, datasets, presentation slides, and clean exports are packaged in **`Data_Visualization_Final_Project.zip`**. |
+
+---
+
 ## 📁 Repository Structure
 *   `data/`
     *   `aviation_accidents_master.csv`: Cleaned, geocoded dataset of NTSB aviation accidents tracking fatalities, weather rules, engine configurations, and aircraft categories.
