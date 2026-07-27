@@ -150,6 +150,15 @@ selected_engines = st.sidebar.slider(
     value=1
 )
 
+st.sidebar.markdown("---")
+st.sidebar.markdown("""
+**Student Details:**
+- **Author:** Mohammed Abrar
+- **Matriculation No.:** 97193111
+- **Program:** Data Science, M.Sc. 120b
+- **GitHub Repository:** [Aviation-Safety-Data-Visualization](https://github.com/mohammedabrarafnan1234-tech/Aviation-Safety-Data-Visualization)
+""")
+
 # Apply filters
 df_filtered = df[
     (df['year'] >= year_range[0]) & 

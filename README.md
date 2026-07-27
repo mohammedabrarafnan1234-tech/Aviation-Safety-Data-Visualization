@@ -3,6 +3,7 @@
 **Author:** Mohammed Abrar  
 **Matriculation No.:** 97193111  
 **Program:** Data Science, M.Sc. 120b  
+**GitHub Repository:** [Aviation-Safety-Data-Visualization](https://github.com/mohammedabrarafnan1234-tech/Aviation-Safety-Data-Visualization)
 
 An end-to-end data analysis, visualization, and interactive dashboard project detailing U.S. and global civil aviation safety metrics, structural durability, weather impact, and mechanical engineering redundancy.
 

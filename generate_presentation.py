@@ -366,7 +366,8 @@ def main():
             <h1 class="big-title" style="background: linear-gradient(to right, #38bdf8, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Aviation Accidents &<br>Flight Safety Intelligence</h1>
             <p style="font-size:22px; max-width:800px; margin: 0 auto; line-height:1.6; opacity:0.8;">An explanatory data story detailing U.S. and global flight safety metrics, structural durability, weather impact, and mechanical engineering redundancy (1982-2026)</p>
             <div class="author-box">
-                Mohammed Abrar &bull; Matriculation No.: 97193111 &bull; Data Science, M.Sc. 120b
+                Mohammed Abrar &bull; Matriculation No.: 97193111 &bull; Data Science, M.Sc. 120b<br>
+                GitHub Repository: <a href="https://github.com/mohammedabrarafnan1234-tech/Aviation-Safety-Data-Visualization" style="color: #38bdf8; text-decoration: none;" target="_blank">Aviation-Safety-Data-Visualization</a>
             </div>
         </div>
         
@@ -719,7 +720,7 @@ def main():
                 </div>
             </div>
             <div class="footer" style="width:100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top:0;">
-                <span>Mohammed Abrar &bull; Matriculation No.: 97193111 &bull; Data Science, M.Sc. 120b</span>
+                <span>Mohammed Abrar &bull; Matriculation No.: 97193111 &bull; Data Science, M.Sc. 120b &bull; <a href="https://github.com/mohammedabrarafnan1234-tech/Aviation-Safety-Data-Visualization" style="color: #38bdf8; text-decoration: none;" target="_blank">GitHub Repo</a></span>
                 <span>Thank You</span>
             </div>
         </div>
