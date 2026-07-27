@@ -10,7 +10,7 @@ def create_notebook():
     # --- Cell 1: Intro ---
     cells.append(nbf.v4.new_markdown_cell("""# U.S. and Global Aviation Accidents & Flight Safety (1982-2026)
 ### Data Visualization Final Project - Summer 2026
-**Author:** Mohammed Abrar
+**Author:** Mohammed Abrar (Matriculation No.: 97193111, Data Science, M.Sc. 120b)
 
 This notebook performs a detailed exploratory and explanatory data analysis of aviation safety, utilizing historical records of civil aviation incidents. The data is sourced from the **U.S. National Transportation Safety Board (NTSB)** and includes over 87,000 incident logs from 1982 to the present day.
 

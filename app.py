@@ -395,7 +395,7 @@ with tab3:
         ).reset_index().sort_values(by='occurrences', ascending=True)
         
         if len(df_q2_grouped) > 0:
-            fig2 = make_subplots(rows=1, cols=2, subplot_titles=("Occurrences count", "Avg Fatality Rate"))
+            fig2 = make_subplots(rows=1, cols=2, shared_yaxes=True, subplot_titles=("Occurrences count", "Avg Fatality Rate"))
             fig2.add_trace(
                 go.Bar(y=df_q2_grouped['broad_phase_of_flight'], x=df_q2_grouped['occurrences'], orientation='h', marker_color='#94a3b8', name='Count'),
                 row=1, col=1
@@ -406,7 +406,7 @@ with tab3:
             )
             fig2.update_layout(
                 template="plotly_white",
-                margin=dict(l=10, r=10, t=10, b=10),
+                margin=dict(l=10, r=10, t=40, b=10),
                 showlegend=False
             )
             fig2.update_xaxes(showgrid=True, gridcolor='#f1f5f9')
