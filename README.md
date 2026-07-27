@@ -64,6 +64,18 @@ If you are using **Anaconda** or want to run directly in **Jupyter Notebook**:
    ```
 5. Open **`analysis.ipynb`** in the web interface and click **Cell > Run All** (or **Run All Cells** in Notebook 7). Plotly's interactive figures will render inline inside the notebook.
 
+### 1.3 Running with VS Code (Visual Studio Code)
+If you prefer running the notebook inside **VS Code**:
+1. Open Visual Studio Code.
+2. Select **File > Open Folder...** and select the extracted **`Data_Visualization_Final_Project`** folder.
+3. Install the official **Python** and **Jupyter** extensions in VS Code if you haven't already.
+4. Click and open **`analysis.ipynb`** in the VS Code explorer.
+5. In the top-right corner of the notebook editor, click **Select Kernel** and choose either:
+   * **Python Environments...** > select the created virtual environment (`.venv`), or
+   * Your active **Anaconda environment** kernel.
+6. Click **Run All** in the notebook toolbar. The cells will execute, and the interactive Plotly visualizations will display directly inline inside VS Code.
+
+
 
 ### 2. Running the Data Pipeline (Optional)
 The data is already downloaded and preprocessed in the `data/` directory. If you ever want to re-run the pipeline to fetch the latest data:
