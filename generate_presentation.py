@@ -27,7 +27,7 @@ def main():
     fig1.update_layout(title="Global Aviation Accidents & Incidents (1982-2024)", xaxis_title="Year", yaxis_title="Reported Occurrences", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40))
     fig1.update_xaxes(showgrid=False)
     fig1.update_yaxes(showgrid=True, gridcolor='#334155')
-    html_fig1 = fig1.to_html(full_html=False, include_plotlyjs='cdn')
+    html_fig1 = fig1.to_html(full_html=False, include_plotlyjs='cdn', config={'responsive': True})
 
     # Fig 2: Flight Phase
     df_q2 = df[df['broad_phase_of_flight'] != 'Unknown'].copy()
@@ -36,7 +36,7 @@ def main():
         avg_fatality_rate=('fatality_rate', 'mean')
     ).reset_index().sort_values(by='occurrences', ascending=True)
     
-    fig2 = make_subplots(rows=1, cols=2, subplot_titles=("Occurrences count", "Avg Fatality Rate"))
+    fig2 = make_subplots(rows=1, cols=2, shared_yaxes=True, subplot_titles=("Occurrences count", "Avg Fatality Rate"))
     fig2.add_trace(go.Bar(y=df_q2_grouped['broad_phase_of_flight'], x=df_q2_grouped['occurrences'], orientation='h', marker_color='#94a3b8', name='Occurrences'), row=1, col=1)
     
     colors_fatality = ['#888888'] * len(df_q2_grouped)
@@ -52,7 +52,7 @@ def main():
     fig2.update_layout(title="Flight Phase Danger Profiles", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40), showlegend=False)
     fig2.update_xaxes(showgrid=True, gridcolor='#334155')
     fig2.update_yaxes(showgrid=False)
-    html_fig2 = fig2.to_html(full_html=False, include_plotlyjs='none')
+    html_fig2 = fig2.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Fig 3: Weather vs. Damage
     df_q3 = df[df['weather_condition'].isin(['VMC', 'IMC']) & df['aircraft_damage'].isin(['Destroyed', 'Substantial', 'Minor', 'Unknown'])].copy()
@@ -64,7 +64,7 @@ def main():
     fig3.update_layout(title="Aircraft Damage Severity by Weather Condition", xaxis_title="Weather Condition", yaxis_title="Percentage (%)", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40))
     fig3.update_xaxes(showgrid=False)
     fig3.update_yaxes(showgrid=True, gridcolor='#334155')
-    html_fig3 = fig3.to_html(full_html=False, include_plotlyjs='none')
+    html_fig3 = fig3.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Fig 4: Bubble chart
     valid_engines = ['Reciprocating', 'Turbo Fan', 'Turbo Jet', 'Turbo Prop', 'Turbo Shaft']
@@ -79,7 +79,7 @@ def main():
     fig4.update_traces(textposition='top center')
     fig4.update_xaxes(showgrid=True, gridcolor='#334155')
     fig4.update_yaxes(showgrid=True, gridcolor='#334155')
-    html_fig4 = fig4.to_html(full_html=False, include_plotlyjs='none')
+    html_fig4 = fig4.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Fig 5: Top Manufacturers
     df_q5_raw = df[(df['year'] >= 2000) & (df['make_cleaned'] != 'Unknown') & df['aircraft_damage'].isin(['Destroyed', 'Substantial', 'Minor', 'Unknown'])].copy()
@@ -88,14 +88,14 @@ def main():
     df_q5_grouped = df_q5_filtered.groupby(['make_cleaned', 'aircraft_damage'])['event_id'].count().reset_index()
     fig5 = px.bar(df_q5_grouped, x='make_cleaned', y='event_id', color='aircraft_damage', color_discrete_map={'Destroyed': '#ef4444', 'Substantial': '#f97316', 'Minor': '#38bdf8', 'Unknown': '#94a3b8'})
     fig5.update_layout(title="Incident Volume & Damage by Top 10 Manufacturers (since 2000)", xaxis_title="Manufacturer", yaxis_title="Incident Count", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40), xaxis={'categoryorder':'total descending'})
-    html_fig5 = fig5.to_html(full_html=False, include_plotlyjs='none')
+    html_fig5 = fig5.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Fig 6: US Choropleth
     us_states = df[(df['country'] == 'United States') & (df['state_or_region'].str.len() == 2)].copy()
     df_q6 = us_states.groupby('state_or_region')['event_id'].count().reset_index()
     fig6 = px.choropleth(df_q6, locations="state_or_region", color="event_id", locationmode="USA-states", scope="usa", color_continuous_scale="Oranges")
     fig6.update_layout(title="Reported Incidents by U.S. State (1982-2024)", paper_bgcolor='rgba(0,0,0,0)', margin=dict(l=0, r=0, t=50, b=0))
-    html_fig6 = fig6.to_html(full_html=False, include_plotlyjs='none')
+    html_fig6 = fig6.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Fig 7: Decade area chart
     df_q9 = df[df['aircraft_damage'].isin(['Destroyed', 'Substantial', 'Minor', 'Unknown'])].copy()
@@ -112,7 +112,7 @@ def main():
     fig7.update_layout(title="Share of Aircraft Damage Severity by Decade (%)", xaxis_title="Decade", yaxis_title="Percentage (%)", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40))
     fig7.update_xaxes(type='category', showgrid=False)
     fig7.update_yaxes(showgrid=True, gridcolor='#334155', range=[0, 100])
-    html_fig7 = fig7.to_html(full_html=False, include_plotlyjs='none')
+    html_fig7 = fig7.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Fig 8: Single vs Multi Engine
     df_q10 = df[df['number_of_engines'] > 0].copy()
@@ -122,7 +122,7 @@ def main():
     fig8.update_layout(title="Fatality Rate: Single-Engine vs. Multi-Engine Redundancy", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40), legend=dict(x=0.05, y=0.9))
     fig8.update_xaxes(showgrid=False)
     fig8.update_yaxes(showgrid=True, gridcolor='#334155')
-    html_fig8 = fig8.to_html(full_html=False, include_plotlyjs='none')
+    html_fig8 = fig8.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Assemble HTML Slides
     html_content = f"""<!DOCTYPE html>
@@ -202,6 +202,8 @@ def main():
             border: 1px solid rgba(255,255,255,0.05);
             padding: 10px;
             min-height: 400px;
+            min-width: 0;
+            overflow: hidden;
         }}
         
         .text-box {{
@@ -209,6 +211,7 @@ def main():
             display: flex;
             flex-direction: column;
             gap: 15px;
+            min-width: 0;
         }}
         
         .bullet-point {{
