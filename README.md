@@ -3,7 +3,8 @@
 **Name:** Mohammed Abrar  
 **Matriculation No.:** 97193111  
 **Program:** Data Science, M.Sc. 120b  
-**GitHub Repository:** [Aviation-Safety-Data-Visualization](https://github.com/mohammedabrarafnan1234-tech/Aviation-Safety-Data-Visualization)
+**GitHub Repository:** [Aviation-Safety-Data-Visualization](https://github.com/mohammedabrarafnan1234-tech/Aviation-Safety-Data-Visualization)  
+**Interactive Slides (Live Link):** [Aviation Safety Storyboard](https://mohammedabrarafnan1234-tech.github.io/Aviation-Safety-Data-Visualization/presentation.html)
 
 An end-to-end data analysis, visualization, and interactive dashboard project detailing U.S. and global civil aviation safety metrics, structural durability, weather impact, and mechanical engineering redundancy.
 
@@ -105,7 +106,9 @@ Here is a preview of the interactive dashboard tabs:
 | ![Engineering & Weather](images/dashboard_factors.png) |
 
 ### 4. Viewing the Presentation Slides (HTML to PDF)
-Double-click `presentation.html` to open it in your browser. It contains **fully interactive Plotly charts** inside the slides!
+You can view the live interactive presentation slides online at: **[Aviation Safety Storyboard](https://mohammedabrarafnan1234-tech.github.io/Aviation-Safety-Data-Visualization/presentation.html)** (no setup required).
+
+Alternatively, double-click the local `presentation.html` file to open it in your browser. It contains **fully interactive Plotly charts** inside the slides!
 *   **To Export to PDF:** Open `presentation.html` in Google Chrome, press `Cmd + P` (Mac) or `Ctrl + P` (Windows), select **Destination: Save as PDF**, tick **Background graphics**, set **Margins: None**, and click **Save**. The custom print CSS is pre-configured to format each slide perfectly as a single 16:9 PDF page.
 
 #### 📸 Presentation Slide Preview
