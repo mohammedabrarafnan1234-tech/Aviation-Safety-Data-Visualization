@@ -195,7 +195,7 @@ def main():
         }}
         
         .chart-box {{
-            flex: 3;
+            flex: 3.5;
             height: 100%;
             border-radius: 12px;
             background: rgba(15, 23, 42, 0.4);
@@ -207,11 +207,16 @@ def main():
         }}
         
         .text-box {{
-            flex: 2;
+            flex: 1.5;
             display: flex;
             flex-direction: column;
             gap: 15px;
             min-width: 0;
+        }}
+
+        .main-svg {{
+            width: 100% !important;
+            max-width: 100% !important;
         }}
         
         .bullet-point {{
