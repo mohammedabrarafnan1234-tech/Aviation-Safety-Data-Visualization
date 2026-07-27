@@ -1,7 +1,11 @@
 import pandas as pd
+# pyrefly: ignore [missing-import]
 import numpy as np
+# pyrefly: ignore [missing-import]
 import plotly.express as px
+# pyrefly: ignore [missing-import]
 import plotly.graph_objects as go
+# pyrefly: ignore [missing-import]
 from plotly.subplots import make_subplots
 import os
 
@@ -12,6 +16,7 @@ def main():
     df = pd.read_csv("data/aviation_accidents_master.csv", low_memory=False)
 
     # Configure default Plotly templates for presentation (dark theme matches our slides)
+    # pyrefly: ignore [missing-import]
     import plotly.io as pio
     pio.templates.default = "plotly_dark"
 
@@ -123,6 +128,84 @@ def main():
     fig8.update_xaxes(showgrid=False)
     fig8.update_yaxes(showgrid=True, gridcolor='#334155')
     html_fig8 = fig8.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
+
+    # Fig Q7: Worldwide distribution of accidents (Scatter map)
+    df_q7 = df[df['latitude'].notna() & df['longitude'].notna() & (df['latitude'] != 0)].copy()
+    df_q7_sample = df_q7.sample(n=min(len(df_q7), 5000), random_state=42)
+    fig_q7 = px.scatter_geo(
+        df_q7_sample,
+        lat="latitude",
+        lon="longitude",
+        color="weather_condition",
+        hover_name="location",
+        color_discrete_map={'VMC': '#38bdf8', 'IMC': '#ef4444', 'Unknown': '#94a3b8'},
+    )
+    fig_q7.update_layout(
+        title="Global Incident Coordinate Distribution Map",
+        margin=dict(l=0, r=0, t=50, b=0),
+        paper_bgcolor='rgba(0,0,0,0)',
+        geo=dict(
+            showland=True,
+            landcolor="#1e293b",
+            oceancolor="#0f172a",
+            showocean=True,
+            showcountries=True,
+            countrycolor="#334155",
+            projection_type="natural earth",
+            bgcolor='rgba(0,0,0,0)'
+        ),
+        legend=dict(orientation="h", yanchor="top", y=-0.05, xanchor="center", x=0.5)
+    )
+    html_fig_q7 = fig_q7.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
+
+    # Fig Q8: Amateur-built vs. Manufactured safety comparison (Pie & Bar subplots)
+    df_q8 = df[df['amateur_built'].isin(['Yes', 'No'])].copy()
+    df_q8_grouped = df_q8.groupby('amateur_built').agg(
+        count=('event_id', 'count'),
+        avg_fatality_rate=('fatality_rate', 'mean')
+    ).reset_index()
+    fig_q8 = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'bar'}]], subplot_titles=("Incident Share", "Average Fatality Rate"))
+    fig_q8.add_trace(
+        go.Pie(labels=df_q8_grouped['amateur_built'], values=df_q8_grouped['count'], name="Incidents", marker=dict(colors=['#94a3b8', '#ef4444'])),
+        row=1, col=1
+    )
+    fig_q8.add_trace(
+        go.Bar(x=df_q8_grouped['amateur_built'], y=df_q8_grouped['avg_fatality_rate'], marker_color=['#94a3b8', '#ef4444'], name="Fatality Rate"),
+        row=1, col=2
+    )
+    fig_q8.update_layout(
+        title="Amateur-Built vs. Manufactured Safety",
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        margin=dict(l=40, r=40, t=50, b=40),
+        showlegend=True,
+        legend=dict(orientation="h", yanchor="top", y=-0.15, xanchor="center", x=0.5)
+    )
+    fig_q8.update_xaxes(showgrid=False)
+    fig_q8.update_yaxes(showgrid=True, gridcolor='#334155')
+    html_fig_q8 = fig_q8.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
+
+    # Fig Q11: Seasonality Month vs Day Heatmap
+    df_q11 = df.groupby(['month', 'day_of_week'])['event_id'].count().reset_index()
+    days_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    months_order = {1:'Jan', 2:'Feb', 3:'Mar', 4:'Apr', 5:'May', 6:'Jun', 7:'Jul', 8:'Aug', 9:'Sep', 10:'Oct', 11:'Nov', 12:'Dec'}
+    df_q11['month_name'] = df_q11['month'].map(months_order)
+    df_q11_pivot = df_q11.pivot(index='month_name', columns='day_of_week', values='event_id')
+    df_q11_pivot = df_q11_pivot.reindex(index=list(months_order.values()), columns=days_order)
+    fig_q11 = px.imshow(
+        df_q11_pivot,
+        labels=dict(x="Day of Week", y="Month", color="Accidents Count"),
+        x=days_order,
+        y=list(months_order.values()),
+        color_continuous_scale="Oranges",
+    )
+    fig_q11.update_layout(
+        title="Accident Volatility: Summer Weekends Peak",
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        margin=dict(l=40, r=40, t=50, b=40)
+    )
+    html_fig_q11 = fig_q11.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Assemble HTML Slides
     html_content = f"""<!DOCTYPE html>
@@ -288,14 +371,14 @@ def main():
         </div>
         
 
-        <!-- SLIDE 3: PROJECT OVERVIEW -->
+        <!-- SLIDE 2: PROJECT OVERVIEW -->
         <div class="slide">
             <div class="header">
                 <div>
                     <h2 class="title">Project Overview & Data Sourcing</h2>
                     <div class="subtitle">Investigating civil flight safety using national databases</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 2 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 2 of 15</div>
             </div>
             <div class="content">
                 <div class="text-box" style="flex:1;">
@@ -303,32 +386,24 @@ def main():
                         <strong>The Goal:</strong> To determine flight safety risks across various aircraft dimensions, assessing weather hazards, engine types, and structural integrity parameters.
                     </div>
                     <div class="bullet-point bullet-blue">
-                        <strong>Authoritative Dataset:</strong> Sourced directly from the <strong>U.S. National Transportation Safety Board (NTSB)</strong> logs (1982-2026), containing over 87,000 observations.
-                    </div>
-                </div>
-                <div class="text-box" style="flex:1;">
-                    <div class="bullet-point">
-                        <strong>Engineering Attributes:</strong> Engine types, passenger counts, coordinates, weather rules (VMC/IMC), flight phases, and structural damage classes.
-                    </div>
-                    <div class="bullet-point bullet-blue">
-                        <strong>Tidy Reshaping:</strong> Deluxe cleaning pipeline resolved coordinate DMS strings and grouped spelling variations for manufacturers (e.g. Cessna, Boeing).
+                        <strong>The Dataset:</strong> The National Transportation Safety Board (NTSB) database covering aviation accidents from 1982 to 2026. Includes structural damage severity, geocoded accident coordinates, and engine redundancies.
                     </div>
                 </div>
             </div>
             <div class="footer">
-                <span>Data Visualization Summer 2026</span>
+                <span>Data Source: NTSB Database</span>
                 <span>Final Individual Project</span>
             </div>
         </div>
-
-        <!-- SLIDE 3: ACCIDENTS TREND -->
+        
+        <!-- SLIDE 3: ACCIDENT FREQUENCY -->
         <div class="slide">
             <div class="header">
                 <div>
                     <h2 class="title">Accidents Continue to Decline</h2>
                     <div class="subtitle">Annual occurrence trends since 1982 (Q1 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 3 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 3 of 15</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -356,7 +431,7 @@ def main():
                     <h2 class="title">Flight Phase Risk Profiles</h2>
                     <div class="subtitle">When do incidents happen, and when are they fatal? (Q2 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 4 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 4 of 15</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -364,10 +439,10 @@ def main():
                 </div>
                 <div class="text-box">
                     <div class="bullet-point">
-                        <strong>High-Activity Exposure:</strong> Landing and Takeoff constitute the absolute majority of incidents because they involve close proximity to the ground and high pilot workload.
+                        <strong>High-Activity Exposure:</strong> Landing and Takeoff constitute the vast majority of incidents because of complex aerodynamics and high pilot workload.
                     </div>
                     <div class="bullet-point bullet-blue">
-                        <strong>Cruise Lethality:</strong> Cruise and Maneuvering are statistically the most lethal phases; an emergency in these envelopes often involves higher speeds and altitudes, resulting in greater impact velocities.
+                        <strong>Cruise Lethality:</strong> Cruise and Maneuvering are statistically the most lethal phases; an emergency in these phases often involves higher speeds and altitudes, leading to greater impact velocities.
                     </div>
                 </div>
             </div>
@@ -377,14 +452,14 @@ def main():
             </div>
         </div>
 
-        <!-- SLIDE 5: WEATHER IMPACT -->
+        <!-- SLIDE 5: WEATHER VS DAMAGE -->
         <div class="slide">
             <div class="header">
                 <div>
                     <h2 class="title">Instrument Weather Multiplies Damage</h2>
                     <div class="subtitle">Weather conditions vs. aircraft hull loss (Q3 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 5 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 5 of 15</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -392,10 +467,10 @@ def main():
                 </div>
                 <div class="text-box">
                     <div class="bullet-point">
-                        <strong>IMC Hazards:</strong> Low-visibility Instrument Meteorological Conditions (IMC) lead to completely "Destroyed" aircraft in nearly 50% of incident records.
+                        <strong>Visibility Hazards:</strong> Instrument Meteorological Conditions (IMC) lead to completely destroyed aircraft in nearly 50% of incident records.
                     </div>
                     <div class="bullet-point bullet-blue">
-                        <strong>VMC Safety:</strong> Under Visual Conditions (VMC), pilots maintain a visual reference with the horizon, resulting in a much higher rate of minor or substantial (non-fatal) damage profiles.
+                        <strong>Visual Flights:</strong> Under Visual Conditions (VMC), pilots maintain a visual reference with the horizon, keeping the overwhelming share of minor or substantial damage profiles.
                     </div>
                 </div>
             </div>
@@ -405,14 +480,14 @@ def main():
             </div>
         </div>
 
-        <!-- SLIDE 6: ENGINE TYPE RELIABILITY -->
+        <!-- SLIDE 6: ENGINE TYPE SAFETY -->
         <div class="slide">
             <div class="header">
                 <div>
                     <h2 class="title">Engine Configurations & Fatality</h2>
                     <div class="subtitle">Engine architectures and passenger safety (Q4 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 6 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 6 of 15</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -440,7 +515,7 @@ def main():
                     <h2 class="title">Incident Volumes by Manufacturer</h2>
                     <div class="subtitle">Top 10 brands and their aircraft damage records (Q5 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 7 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 7 of 15</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -468,7 +543,7 @@ def main():
                     <h2 class="title">United States Incident Hotspots</h2>
                     <div class="subtitle">State-level incident distribution map (Q6 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 8 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 8 of 15</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -489,14 +564,70 @@ def main():
             </div>
         </div>
 
-        <!-- SLIDE 9: DECADES STRUCTURAL IMPROVEMENT -->
+        <!-- SLIDE 9: GLOBAL COORDINATE MAP -->
+        <div class="slide">
+            <div class="header">
+                <div>
+                    <h2 class="title">Global Incident Distribution</h2>
+                    <div class="subtitle">Geographic hotspots of aviation incidents globally (Q7 Analysis)</div>
+                </div>
+                <div style="font-size:14px; color:#64748b;">Slide 9 of 15</div>
+            </div>
+            <div class="content">
+                <div class="chart-box">
+                    {html_fig_q7}
+                </div>
+                <div class="text-box">
+                    <div class="bullet-point">
+                        <strong>Global Reporting Hubs:</strong> The majority of incidents are tracked in North America due to dense aviation infrastructure and NTSB reporting mandates.
+                    </div>
+                    <div class="bullet-point bullet-blue">
+                        <strong>Transoceanic Flights:</strong> Outlying geocoded coordinate clusters match major oceanic flight corridors and international shipping routes.
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Data Source: NTSB Database</span>
+                <span>Final Individual Project</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: AMATEUR VS PROFESSIONAL BUILDERS -->
+        <div class="slide">
+            <div class="header">
+                <div>
+                    <h2 class="title">Amateur-Built vs. Manufactured Safety</h2>
+                    <div class="subtitle">Comparing safety metrics of homebuilt and production models (Q8 Analysis)</div>
+                </div>
+                <div style="font-size:14px; color:#64748b;">Slide 10 of 15</div>
+            </div>
+            <div class="content">
+                <div class="chart-box">
+                    {html_fig_q8}
+                </div>
+                <div class="text-box">
+                    <div class="bullet-point">
+                        <strong>Incident Volume:</strong> Homebuilt (amateur-built) aircraft represent less than 10% of total reported incidents in the database.
+                    </div>
+                    <div class="bullet-point bullet-blue">
+                        <strong>Fatality Disparity:</strong> However, homebuilt aircraft carry a **50% higher average fatality rate** when an accident does occur, highlighting private manufacturing vulnerabilities.
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Data Source: NTSB Database</span>
+                <span>Final Individual Project</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: DECADES STRUCTURAL IMPROVEMENT -->
         <div class="slide">
             <div class="header">
                 <div>
                     <h2 class="title">Structural Integrity Progress</h2>
                     <div class="subtitle">Hull loss rates by decade (Q9 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 9 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 11 of 15</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -517,14 +648,14 @@ def main():
             </div>
         </div>
 
-        <!-- SLIDE 10: ENGINE REDUNDANCY SAFETY -->
+        <!-- SLIDE 12: ENGINE REDUNDANCY SAFETY -->
         <div class="slide">
             <div class="header">
                 <div>
                     <h2 class="title">The Power of Engine Redundancy</h2>
                     <div class="subtitle">Single-Engine vs. Multi-Engine fatality trends (Q10 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 10 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 12 of 15</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -545,7 +676,35 @@ def main():
             </div>
         </div>
 
-        <!-- SLIDE 11: CONCLUSIONS -->
+        <!-- SLIDE 13: SEASONAL AND OPERATIONAL PATTERNS -->
+        <div class="slide">
+            <div class="header">
+                <div>
+                    <h2 class="title">Seasonal & Operational Patterns</h2>
+                    <div class="subtitle">Investigating accident rates by Month and Day of Week (Q11 Analysis)</div>
+                </div>
+                <div style="font-size:14px; color:#64748b;">Slide 13 of 15</div>
+            </div>
+            <div class="content">
+                <div class="chart-box">
+                    {html_fig_q11}
+                </div>
+                <div class="text-box">
+                    <div class="bullet-point">
+                        <strong>The Summer Peak:</strong> Accident volumes spike significantly in June, July, and August. This corresponds with recreational and private flying schedules in summer weather.
+                    </div>
+                    <div class="bullet-point bullet-blue">
+                        <strong>Weekend Volatility:</strong> Saturday and Sunday show elevated incident footprints across all months, aligning with flight school operations and private pilot leisure flights.
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                  <span>Data Source: NTSB Database</span>
+                  <span>Final Individual Project</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: CONCLUSIONS -->
         <div class="slide slide-title-only">
             <h2 class="title" style="font-size:42px;">Conclusions & Takeaways</h2>
             <div style="max-width:900px; margin: 40px auto; text-align: left; display:flex; flex-direction:column; gap:20px;">
@@ -565,14 +724,14 @@ def main():
             </div>
         </div>
 
-        <!-- SLIDE 12: QUICK START & NAVIGATION GUIDE -->
+        <!-- SLIDE 15: QUICK START & NAVIGATION GUIDE -->
         <div class="slide">
             <div class="header">
                 <div>
                     <h2 class="title">Quick Start & Navigation Guide</h2>
                     <div class="subtitle">Instructions for professors, reviewers, and developers</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 12 of 12</div>
+                <div style="font-size:14px; color:#64748b;">Slide 15 of 15</div>
             </div>
             <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; align-items: stretch; margin-top:20px;">
                 <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 12px; display:flex; flex-direction:column; gap:15px; min-width: 0;">
@@ -590,7 +749,7 @@ def main():
                 <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 12px; display:flex; flex-direction:column; gap:15px; min-width: 0;">
                     <h3 style="margin:0 0 10px 0; color:#f97316; font-size:20px; font-weight:600; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">📊 Presentation Navigation</h3>
                     <div class="bullet-point bullet-blue">
-                        <strong>Widescreen Scrolling:</strong> Scroll vertically to browse through the 12 slides. Each slide is sized to fit exactly 100vh.
+                        <strong>Widescreen Scrolling:</strong> Scroll vertically to browse through the 15 slides. Each slide is sized to fit exactly 100vh.
                     </div>
                     <div class="bullet-point">
                         <strong>Interactive Charts:</strong> All charts in this deck are live Plotly graphs. Hover to see exact counts, drag to zoom, and double-click to reset.
