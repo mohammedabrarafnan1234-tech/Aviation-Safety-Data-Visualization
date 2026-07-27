@@ -24,7 +24,7 @@ def main():
     for t, col, w in [('Accident', '#ef4444', 3), ('Incident', '#38bdf8', 2)]:
         df_t = df_q1[df_q1['investigation_type'] == t]
         fig1.add_trace(go.Scatter(x=df_t['year'], y=df_t['count'], mode='lines+markers', name=t, line=dict(color=col, width=w), marker=dict(size=4)))
-    fig1.update_layout(title="Global Aviation Accidents & Incidents (1982-2024)", xaxis_title="Year", yaxis_title="Reported Occurrences", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40))
+    fig1.update_layout(title="Global Aviation Accidents & Incidents (1982-2024)", xaxis_title="Year", yaxis_title="Reported Occurrences", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=60, b=40), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
     fig1.update_xaxes(showgrid=False)
     fig1.update_yaxes(showgrid=True, gridcolor='#334155')
     html_fig1 = fig1.to_html(full_html=False, include_plotlyjs='cdn', config={'responsive': True})
@@ -61,7 +61,7 @@ def main():
     df_q3_grouped['pct'] = df_q3_grouped.apply(lambda r: (r['event_id'] / totals[r['weather_condition']]) * 100, axis=1)
     
     fig3 = px.bar(df_q3_grouped, x='weather_condition', y='pct', color='aircraft_damage', color_discrete_map={'Destroyed': '#ef4444', 'Substantial': '#f97316', 'Minor': '#38bdf8', 'Unknown': '#94a3b8'})
-    fig3.update_layout(title="Aircraft Damage Severity by Weather Condition", xaxis_title="Weather Condition", yaxis_title="Percentage (%)", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40))
+    fig3.update_layout(title="Aircraft Damage Severity by Weather Condition", xaxis_title="Weather Condition", yaxis_title="Percentage (%)", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=60), legend=dict(orientation="h", yanchor="top", y=-0.15, xanchor="center", x=0.5))
     fig3.update_xaxes(showgrid=False)
     fig3.update_yaxes(showgrid=True, gridcolor='#334155')
     html_fig3 = fig3.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
@@ -75,7 +75,7 @@ def main():
         avg_fatality_rate=('fatality_rate', 'mean')
     ).reset_index()
     fig4 = px.scatter(df_q4_grouped, x='avg_engines', y='avg_fatality_rate', size='occurrences', color='engine_type', text='engine_type', color_discrete_sequence=px.colors.qualitative.Safe, size_max=40)
-    fig4.update_layout(title="Engine Type Safety & Redundancy Profile", xaxis_title="Average Number of Engines", yaxis_title="Average Fatality Rate", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40))
+    fig4.update_layout(title="Engine Type Safety & Redundancy Profile", xaxis_title="Average Number of Engines", yaxis_title="Average Fatality Rate", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=60), legend=dict(orientation="h", yanchor="top", y=-0.15, xanchor="center", x=0.5))
     fig4.update_traces(textposition='top center')
     fig4.update_xaxes(showgrid=True, gridcolor='#334155')
     fig4.update_yaxes(showgrid=True, gridcolor='#334155')
@@ -87,7 +87,7 @@ def main():
     df_q5_filtered = df_q5_raw[df_q5_raw['make_cleaned'].isin(top_makes)].copy()
     df_q5_grouped = df_q5_filtered.groupby(['make_cleaned', 'aircraft_damage'])['event_id'].count().reset_index()
     fig5 = px.bar(df_q5_grouped, x='make_cleaned', y='event_id', color='aircraft_damage', color_discrete_map={'Destroyed': '#ef4444', 'Substantial': '#f97316', 'Minor': '#38bdf8', 'Unknown': '#94a3b8'})
-    fig5.update_layout(title="Incident Volume & Damage by Top 10 Manufacturers (since 2000)", xaxis_title="Manufacturer", yaxis_title="Incident Count", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40), xaxis={'categoryorder':'total descending'})
+    fig5.update_layout(title="Incident Volume & Damage by Top 10 Manufacturers (since 2000)", xaxis_title="Manufacturer", yaxis_title="Incident Count", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=60), xaxis={'categoryorder':'total descending'}, legend=dict(orientation="h", yanchor="top", y=-0.15, xanchor="center", x=0.5))
     html_fig5 = fig5.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
 
     # Fig 6: US Choropleth
@@ -109,7 +109,7 @@ def main():
     fig7.add_trace(go.Scatter(x=df_q9_pct['decade'], y=df_q9_pct['Minor'], name='Minor', stackgroup='one', line=dict(color='#38bdf8')))
     fig7.add_trace(go.Scatter(x=df_q9_pct['decade'], y=df_q9_pct['Substantial'], name='Substantial', stackgroup='one', line=dict(color='#f97316')))
     fig7.add_trace(go.Scatter(x=df_q9_pct['decade'], y=df_q9_pct['Destroyed'], name='Destroyed', stackgroup='one', line=dict(color='#ef4444')))
-    fig7.update_layout(title="Share of Aircraft Damage Severity by Decade (%)", xaxis_title="Decade", yaxis_title="Percentage (%)", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40))
+    fig7.update_layout(title="Share of Aircraft Damage Severity by Decade (%)", xaxis_title="Decade", yaxis_title="Percentage (%)", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=60), legend=dict(orientation="h", yanchor="top", y=-0.15, xanchor="center", x=0.5))
     fig7.update_xaxes(type='category', showgrid=False)
     fig7.update_yaxes(showgrid=True, gridcolor='#334155', range=[0, 100])
     html_fig7 = fig7.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
@@ -119,7 +119,7 @@ def main():
     df_q10['engine_class'] = df_q10['number_of_engines'].apply(lambda x: 'Single-Engine' if x == 1 else 'Multi-Engine')
     df_q10_grouped = df_q10.groupby(['year', 'engine_class'])['fatality_rate'].mean().reset_index()
     fig8 = px.line(df_q10_grouped, x='year', y='fatality_rate', color='engine_class', color_discrete_map={'Single-Engine': '#ef4444', 'Multi-Engine': '#38bdf8'}, labels={'year': 'Year', 'fatality_rate': 'Average Fatality Rate', 'engine_class': 'Engine Class'})
-    fig8.update_layout(title="Fatality Rate: Single-Engine vs. Multi-Engine Redundancy", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=50, b=40), legend=dict(x=0.05, y=0.9))
+    fig8.update_layout(title="Fatality Rate: Single-Engine vs. Multi-Engine Redundancy", paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', margin=dict(l=40, r=40, t=60, b=40), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
     fig8.update_xaxes(showgrid=False)
     fig8.update_yaxes(showgrid=True, gridcolor='#334155')
     html_fig8 = fig8.to_html(full_html=False, include_plotlyjs='none', config={'responsive': True})
