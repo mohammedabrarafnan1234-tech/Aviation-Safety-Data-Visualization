@@ -25,6 +25,12 @@ An end-to-end data analysis, visualization, and interactive dashboard project de
 
 ## 🚀 Getting Started & How to Run
 
+> [!IMPORTANT]
+> **Quick Start Note for Professor / Evaluator:**
+> * **Zero Setup Required**: The clean master dataset is already pre-packaged in `data/aviation_accidents_master.csv`. You do **not** need to run the downloader or clean pipeline.
+> * **No-Install Quick View**: Double-click **`analysis.html`** to view the full Jupyter Notebook analysis with pre-rendered interactive Plotly charts, or double-click **`presentation.html`** to browse the widescreen slide deck in Google Chrome.
+> * **Run Live Code**: Follow the Jupyter Notebook or Streamlit dashboard launch instructions below.
+
 ### 1. Prerequisite Setup
 Ensure you have **Python 3.8+** installed. Create a virtual environment and install the required libraries:
 ```bash
