@@ -36,6 +36,28 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+### 1.2 Running with Anaconda / Jupyter Notebook
+If you are using **Anaconda** or want to run directly in **Jupyter Notebook**:
+1. Open your **Anaconda Prompt** (Windows) or terminal (Mac/Linux).
+2. Navigate to this project directory:
+   ```bash
+   cd "/Users/mohammedabrar/Desktop/Projects/data visulisation /data_vis_project"
+   ```
+3. Install the required packages:
+   ```bash
+   # Option A: Install using conda from conda-forge
+   conda install pandas numpy plotly requests openpyxl nbformat nbconvert -c conda-forge
+   
+   # Option B: Or simply install via pip in your Anaconda environment
+   pip install -r requirements.txt
+   ```
+4. Launch the Jupyter server:
+   ```bash
+   jupyter notebook
+   ```
+5. Open **`analysis.ipynb`** in the web interface and click **Cell > Run All** (or **Run All Cells** in Notebook 7). Plotly's interactive figures will render inline inside the notebook.
+
+
 ### 2. Running the Data Pipeline (Optional)
 The data is already downloaded and preprocessed in the `data/` directory. If you ever want to re-run the pipeline to fetch the latest data:
 ```bash
