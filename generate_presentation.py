@@ -287,14 +287,55 @@ def main():
             </div>
         </div>
         
-        <!-- SLIDE 2: PROJECT OVERVIEW -->
+        <!-- SLIDE 2: QUICK START & NAVIGATION GUIDE -->
+        <div class="slide">
+            <div class="header">
+                <div>
+                    <h2 class="title">Quick Start & Navigation Guide</h2>
+                    <div class="subtitle">Instructions for professors, reviewers, and developers</div>
+                </div>
+                <div style="font-size:14px; color:#64748b;">Slide 2 of 12</div>
+            </div>
+            <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; align-items: stretch; margin-top:20px;">
+                <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 12px; display:flex; flex-direction:column; gap:15px; min-width: 0;">
+                    <h3 style="margin:0 0 10px 0; color:#38bdf8; font-size:20px; font-weight:600; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">🖥️ How to Run the Project</h3>
+                    <div class="bullet-point">
+                        <strong>Streamlit Dashboard:</strong> Run <code>.venv/bin/python3 -m streamlit run app.py</code> to launch the interactive app.
+                    </div>
+                    <div class="bullet-point bullet-blue">
+                        <strong>Jupyter Notebook:</strong> Open <code>analysis.ipynb</code> inside Anaconda or Jupyter to see the full code and data query outputs.
+                    </div>
+                    <div class="bullet-point">
+                        <strong>Re-run Pipeline:</strong> Execute <code>python download_and_clean.py</code> to download and rebuild the datasets.
+                    </div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 12px; display:flex; flex-direction:column; gap:15px; min-width: 0;">
+                    <h3 style="margin:0 0 10px 0; color:#f97316; font-size:20px; font-weight:600; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px;">📊 Presentation Navigation</h3>
+                    <div class="bullet-point bullet-blue">
+                        <strong>Widescreen Scrolling:</strong> Scroll vertically to browse through the 12 slides. Each slide is sized to fit exactly 100vh.
+                    </div>
+                    <div class="bullet-point">
+                        <strong>Interactive Charts:</strong> All charts in this deck are live Plotly graphs. Hover to see exact counts, drag to zoom, and double-click to reset.
+                    </div>
+                    <div class="bullet-point bullet-blue">
+                        <strong>Print to PDF:</strong> Press <code>Cmd/Ctrl + P</code>, select <strong>Landscape</strong>, set <strong>Margins: None</strong>, enable <strong>Background graphics</strong> to generate a clean PDF deck.
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Data Science, M.Sc. 120b</span>
+                <span>Final Individual Project</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: PROJECT OVERVIEW -->
         <div class="slide">
             <div class="header">
                 <div>
                     <h2 class="title">Project Overview & Data Sourcing</h2>
                     <div class="subtitle">Investigating civil flight safety using national databases</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 2 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 3 of 12</div>
             </div>
             <div class="content">
                 <div class="text-box" style="flex:1;">
@@ -327,7 +368,7 @@ def main():
                     <h2 class="title">Accidents Continue to Decline</h2>
                     <div class="subtitle">Annual occurrence trends since 1982 (Q1 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 3 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 4 of 12</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -355,7 +396,7 @@ def main():
                     <h2 class="title">Flight Phase Risk Profiles</h2>
                     <div class="subtitle">When do incidents happen, and when are they fatal? (Q2 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 4 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 5 of 12</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -383,7 +424,7 @@ def main():
                     <h2 class="title">Instrument Weather Multiplies Damage</h2>
                     <div class="subtitle">Weather conditions vs. aircraft hull loss (Q3 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 5 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 6 of 12</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -411,7 +452,7 @@ def main():
                     <h2 class="title">Engine Configurations & Fatality</h2>
                     <div class="subtitle">Engine architectures and passenger safety (Q4 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 6 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 7 of 12</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -439,7 +480,7 @@ def main():
                     <h2 class="title">Incident Volumes by Manufacturer</h2>
                     <div class="subtitle">Top 10 brands and their aircraft damage records (Q5 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 7 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 8 of 12</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -467,7 +508,7 @@ def main():
                     <h2 class="title">United States Incident Hotspots</h2>
                     <div class="subtitle">State-level incident distribution map (Q6 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 8 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 9 of 12</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -495,7 +536,7 @@ def main():
                     <h2 class="title">Structural Integrity Progress</h2>
                     <div class="subtitle">Hull loss rates by decade (Q9 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 9 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 10 of 12</div>
             </div>
             <div class="content">
                 <div class="chart-box">
@@ -523,7 +564,7 @@ def main():
                     <h2 class="title">The Power of Engine Redundancy</h2>
                     <div class="subtitle">Single-Engine vs. Multi-Engine fatality trends (Q10 Analysis)</div>
                 </div>
-                <div style="font-size:14px; color:#64748b;">Slide 10 of 11</div>
+                <div style="font-size:14px; color:#64748b;">Slide 11 of 12</div>
             </div>
             <div class="content">
                 <div class="chart-box">
