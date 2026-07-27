@@ -42,7 +42,7 @@ If you are using **Anaconda** or want to run directly in **Jupyter Notebook**:
 1. Open your **Anaconda Prompt** (Windows) or terminal (Mac/Linux).
 2. Navigate to this project directory:
    ```bash
-   cd "/Users/mohammedabrar/Desktop/Projects/data visulisation /data_vis_project"
+   cd "Data_Visualization_Final_Project"
    ```
 3. Install the required packages:
    ```bash
